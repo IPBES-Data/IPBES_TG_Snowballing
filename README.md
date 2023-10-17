@@ -4,30 +4,18 @@
 
 TODO: Badge for link to ICT guide!
 
-# %TECHNICAL_GUIDELINE_NAME%
-# Version %VERSIO.VERSION%
+# Snowballing for Literature Search and Analysis
 
 This repository contains the dource code for a Technical Guideline (TG).
 
 The final version is available via the DOI above, which points to a versioned DOI, i.e. always the last version of the Technical Guideline.
 
-- LICENSE?
-
-The info in `% %` need to be changed to the appropriate values. In addition, the empty fields need to be filled in.
+- LICENSE
+CC BY-SA 4.0
 
 ## Metadata
 
-- **Project name**: %PROJECT_NAME%
-- **Short Name**: %SHORT_NAME%
-
-- **Status**: %STATUS% (e.g. in planning, in progress, completed, canceled, waiting for response etc.)
-
-- **Author**: %ASSIGNED_TO% (tsu data)
-
-- **email to**:
-  - %EMAIL_TO%
-
-- **Github Repo**: [IPBES_TG_xxx__template](https://github.com/IPBES-Data/xxxx) REPLACE WITH CORRECT LINK
+- **Github Repo**: [IPBES_TG_Snowballing](https://github.com/IPBES-Data/IPBES_TG_Snowballing)
 
 ## Folders
 
@@ -39,8 +27,16 @@ If there are any - otherwise delete this section.
 
 ## Abstract of the TG
 
-Same as in the technical guideline
+In addition to the typical literature search using search terms,
+  one can conduct a snowballing search, which is searching, starting
+  from a set of identified key-papers, the publications cited in the key papers
+  as well as the publictions citing the key-paper. This search is much more
+  focussed on the topic of the key-papers and provides, as a ind of by-product,
+  the citation network of the papers. Here we will discuss how this can be
+  achieved with code examples and mention some shortcomings and abvantages of
+  this approach. Furthermore, we will outline some analysis approaches and
+  possibilities of a citation network without going into to moch detail
 
 ## Final Documents
 
-- [Technical Guideline](IPBES_TG_xxx_template.html)
+- [Snowballing for Literature Search and Analysis](IPBES_TG_Snowballing.html)
