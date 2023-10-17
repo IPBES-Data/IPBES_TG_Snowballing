@@ -1,0 +1,81 @@
+---
+title: Technical Guideline Series
+subtitle: fffff
+date: today
+author:
+  - name: Josiah Carberry
+    id: jc
+    orcid: 0000-0002-1825-0097
+    email: josiah@psychoceramics.org
+    affiliation: 
+      - name: Brown University
+        city: Providence
+        state: RI
+        url: www.brown.edu
+    roles: [author, editor]
+  - name: Josiah Carberry
+    id: jc
+    orcid: 0000-0002-1825-0097
+    email: josiah@psychoceramics.org
+    affiliation: 
+      - name: Brown University
+        city: Providence
+        state: RI
+        url: www.brown.edu
+abstract: > 
+  The characteristic theme of the works of Stone is 
+  the bridge between culture and society. ...
+keywords:
+  - aaaaa
+  - bbbbb
+license: "CC BY"
+copyright: 
+  holder: No idea
+  year: 2023
+citation: 
+  type: report
+  container-title: IPBES Technical Guidelines on XXXXX
+  doi: 10.5281/zenodo.10004407
+doi: 10.5281/zenodo.10004407
+version: 0.0.1
+
+format:
+    html:
+        toc: true
+        toc-depth: 4
+        toc_expand: true
+        embed-resources: true
+        code-fold: true
+        code-summary: 'Show the code'
+---
+
+```{r}
+#| label: setup
+#| include: false
+# This is needed to execute the inline code
+```
+
+**WE SHOULD ADD THE ORCIDS HERE and follow the standard with institute etc in foot notes**
+Prepared by 
+- [Renske Gudde](mailto:xxx@yyy.zz) - IPBES Technical Support Unit for Knowledge 
+- [Rainer M. Krug](mailto:xxx@yyy.zz) - IPBES Task Force on Knowledge and Data. 
+
+Reviewed by 
+- [Aidin Niamir](mailto:xxx@yyy.zz)
+- [Yanina V. Sica](mailto:xxx@yyy.zz) - IPBES Technical Support Unit for Knowledge and Data
+- IPBES Task Force on Knowledge and Data** 
+
+*For any inquires please contact [aidin.niamir\@senckenberg.de](mailto:aidin.niamir@senckenberg.de)* 
+
+**Version:** `r rmarkdown::metadata$version`
+
+Last updated: 16 October 2023
+
+
+THE GUIDELINE
+
+Final version that has been approved by the Plenary and is ready for publication:
+
+| Description | Version |
+| --- | --- |
+| File submitted for publication | `r rmarkdown::metadata$version` |
