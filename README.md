@@ -6,26 +6,21 @@ TODO: Badge for link to ICT guide!
 
 # Snowballing for Literature Search and Analysis
 
-This repository contains the dource code for a Technical Guideline (TG).
+This repository contains the source code for a Technical Guideline (TG).
 
 The final version is available via the DOI above, which points to a versioned DOI, i.e. always the last version of the Technical Guideline.
 
-- LICENSE
-CC BY-SA 4.0
 
-## Metadata
 
-- **Github Repo**: [IPBES_TG_Snowballing](https://github.com/IPBES-Data/IPBES_TG_Snowballing)
+## **Github Repo**: [IPBES_TG_Snowballing](https://github.com/IPBES-Data/IPBES_TG_Snowballing)
 
 ## Folders
-
-If there are any - otherwise delete this section.
 
 - **`data`**: data files created during the running of the code file and contains cached as well as final data files.
 - **`figures`**: figures created during the running of the code` file in low-res as well as high-res.
 - **`R`**: R scripts used to run the code in the repo. Files in this folder will be sourced initially.
 
-## Abstract of the TG
+## Abstract
 
 In addition to the typical literature search using search terms,
   one can conduct a snowballing search, which is searching, starting
