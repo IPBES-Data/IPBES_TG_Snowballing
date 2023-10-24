@@ -16,7 +16,7 @@ The final version is available via the DOI above, which points to a versioned DO
 
 ## Folders
 
-- **`data`**: data files created during the running of the code file and contains cached as well as final data files.
+- **[data](data/)**: data files created during the running of the code file and contains cached as well as final data files.
 - **`figures`**: figures created during the running of the code` file in low-res as well as high-res.
 - **`R`**: R scripts used to run the code in the repo. Files in this folder will be sourced initially.
 
