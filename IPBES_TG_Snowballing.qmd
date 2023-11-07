@@ -54,6 +54,10 @@ format:
         embed-resources: true
         code-fold: false
         code-summary: 'Show the code'
+    docx:
+        toc: true
+        toc-depth: 4
+        prefer-html: true
 ---
 
 ```{r}
