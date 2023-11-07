@@ -32,6 +32,9 @@ In addition to the typical literature search using search terms,
   this approach. Furthermore, we will outline some analysis approaches and
   possibilities of a citation network without going into to moch detail
 
+## Google Doc for Reviev
+[IPBES_TG_Snowballing](https://docs.google.com/document/d/10Xrxo4wM79GyNFQDnM0sZJtGVnR1qlBdNYCeSC55Y8E/edit)
+
 ## Final Documents
 
 - [Snowballing for Literature Search and Analysis](IPBES_TG_Snowballing.html)
