@@ -381,10 +381,23 @@ p <- simpleNetwork(
 p
 ```
 
+
+#### And another graph option (have to try it out)
+
+```{r}
+#| eval: false
+
+# https://datastorm-open.github.io/visNetwork/
+library(visNetwork)
+
+copub_network <-
+    visNetwork(snowball$nodes, snowball$edges, width = "100%") |>
+    ## set random seed for reproducibility
+    visLayout(randomSeed = 123) |>
+    visOptions(
+        selectedBy = list(variable = "doi", highlight = TRUE),
+        highlightNearest = list(enabled = TRUE, algorithm = "all")
+    )
+```
+
 ## Advantages and disadvantages of snowballing
-
-Final version that has been approved by the Plenary and is ready for publication:
-
-| Description | Version |
-| --- | --- |
-| File submitted for publication | `r rmarkdown::metadata$version` |
