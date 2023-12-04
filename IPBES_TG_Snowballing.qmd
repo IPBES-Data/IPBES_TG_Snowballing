@@ -1,9 +1,11 @@
 ---
 title: Technical Guideline Series
-subtitle: Snowballing for Literature Search and Analysis
+subtitle: Snowballing for Scientific Literature Search and Analysis
 date: today
 author:
-  - name: Rainer M Krug
+  - name: 
+        family: Krug
+        given: Rainer M.
     id: rmk
     orcid: 0000-0002-7490-0066
     email: Rainer.Krug@Senckenberg.de, Rainer@Krugs.de
@@ -12,7 +14,9 @@ author:
         city: Frankfurt (Main)
         url: https://www.senckenberg.de/en/institutes/sbik-f/
     roles: [author, editor]
-  - name: Aidin Niamir
+  - name: 
+        family: Niamir
+        given: Aidin 
     id: an
     orcid: 0000-0003-4511-3407
     email: Aidin.Niamir@Senckenberg.de
@@ -22,19 +26,8 @@ author:
         url: https://www.senckenberg.de/en/institutes/sbik-f/
     roles: [editor]
 abstract: > 
-  In addition to the typical literature search using search terms,
-  one can conduct a snowballing search, which is searching, starting 
-  from a set of identified key-papers, the publications cited in the key papers
-  as well as the publictions citing the key-paper. This search is much more 
-  focussed on the topic of the key-papers and provides, as a ind of by-product, 
-  the citation network of the papers. Here we will discuss how this can be 
-  achieved with code examples and mention some shortcomings and abvantages of 
-  this approach. Furthermore, we will outline some analysis approaches and 
-  possibilities of a citation network without going into to moch detail  
-keywords:
-  - literature search
-  - snowballing
-  - citation network
+    In addition to the typical literature search using search terms, one can conduct a snowballing search, which is searching, starting from a set of identified key-papers, the publications cited in the key papers as well as the publications citing the key-paper. This search strategy identifies related articles using citation relationships (not keywords) building a citation network focused on the topic of the key-papers  Here we will discuss how a snowballing searc hcan be achieved with code examples and mention some shortcomings and advantages of this approach. Furthermore, we will outline some analysis approaches and possibilities of a citation network without going into too much detail 
+keyword: "literature search, snowballing, citation network"
 license: "CC BY"
 copyright: 
   holder: No idea
@@ -54,10 +47,6 @@ format:
         embed-resources: true
         code-fold: false
         code-summary: 'Show the code'
-    docx:
-        toc: true
-        toc-depth: 4
-        prefer-html: true
 ---
 
 ```{r}
@@ -72,6 +61,8 @@ Prepared by
 
 Reviewed by 
 - [Aidin Niamir](mailto:Aidin.Niamir@Senckenberg.de) - IPBES Technical Support Unit for Knowledge and Data
+- [Yanina Sica](mailto:Yanina.Sica@Senckenberg.de) - IPBES Technical Support Unit for Knowledge and Data
+
 <!-- - IPBES Task Force on Knowledge and Data**  -->
 
 *For any inquires please contact [Aidin.Niamir@senckenberg.de](mailto:aidin.niamir@senckenberg.de)* 
@@ -83,32 +74,17 @@ Last updated: `r Sys.Date() |> format("%d %B, %Y")`
 
 ## Introduction
 
-Snowballing in literature search and analysis refers to the approach to search for literature
-starting from a set of identified key-papers. These key-papers should cover the range of 
-the topic which should be covered by the literature search, and also contain the most relevant 
-papers of the topic. Starting from these key-papers, the papers which are **cited** in the key-papers
-(also called backward search) as well as the papers which are **citing** the key papers 
-(also called forward search) are identified. 
+Snowballing in literature search and analysis refers to the approach to search for literature starting from a set of identified key-papers. These key-papers should cover the range of the topic which should be covered by the literature search, while containing  the most relevant papers of the topic. Starting from these key-papers, the papers which are cited in the key-papers (also called backward search) as well as the papers which are citing the key-papers (also called forward search) are identified.
 
-Consequently, the selection of the key-papers is essential o=in determining the resulting 
-coverage of the topic by the literature identified by the snowball search.
+Consequently, the selection of the key-papers is essential in determining the resulting coverage of the topic by the literature identified by the snowball search.
+
 
 ## Methods
 
 ### Databases suitable for Snowballing
-In principle, snowballing can be done with most (if not all) literature
-databases. Examples are Web of Science and Scopus (CONFIRM) which provide the possibility to 
-search from the web interface for papers citing a specific paper. But this can only be done from the web 
-interface and for one article at the time, so it is very cumbersome. One could use the provided APIs, 
-but these become easily extremely expensive and still ladden with restrictions.
-
-A better database for this type if search is [OpenAlex](https://openalex.org), which has 
-free API access which is for all practical purposes unlimited. Therefore, the Snowball 
-search can be scripted, and API clients are available for many different programming languages.
-
-This technical guideline will forus particularly on the use of OpenAlex through the R package 
-[openalexR](https://docs.ropensci.org/openalexR/articles/A_Brief_Introduction_to_openalexR.html) 
-which is perfectly suited for this task, in addition to being easy to use.
+In principle, snowballing can be done with most (if not all) literature databases. Examples are Web of Science,Scopus or PubMed which provide the possibility to search for papers from their web interface or using API services (e.g. https://dev.elsevier.com/sc_apis.html). When using their web interface, one can only search  for one article at the time, so it is very cumbersome. Using  the provided APIs makes  automating the process possible, but becomes easily extremely expensive and still laden with restrictions.
+A good alternative for this type of search strategy is [OpenAlex](https://openalex.org), which has free and unlimited API access for all practical purposes. Therefore, the Snowball search can be scripted, and API clients are available for many different programming languages.
+This technical guideline will focus particularly on the use of [OpenAlex](https://openalex.org) (the by the data tsu recommended data source for literature) through the R package [openalexR](https://docs.ropensci.org/openalexR/articles/A_Brief_Introduction_to_openalexR.html) which is perfectly suited for this task, in addition to being easy to use.
 
 ### Snowballing in R
 
@@ -129,8 +105,8 @@ library(openalexR)
 ```
 
 #### Snowballing
-Let's assume, we have a list of DOIs of the key papers, which ghave been identified by 
-experts with knowledge of the field.
+Let's assume, we have a list of DOIs of the key papers, which have been identified by 
+experts with knowledge of the field and topic.
 
 ```{r}
 #| eval: true
@@ -141,12 +117,7 @@ dois <- c(
 )
 ```
 
-As the snowball search in OpenAlex is based on identifiers internal ids, the DOIs 
-need to be converted to internal ids. This can be done using the function `oa_fetch()`
-of the pack=ge `openalexR` which can take a list of DOIs and returns a list of works 
-as provided py OpenAlex. The function has many other arguments, but I will concentrate
-here on the use for this specific example. For more information, please refer to the 
-help in R or the [documentation](https://docs.ropensci.org/openalexR/reference/index.html).
+As the snowball search in [OpenAlex](https://openalex.org) is based on internal identifiers (OpenAlex ids), the DOIs need to be converted to these internal ids. This can be done using the function `oa_fetch()` of the package [openalexR](https://docs.ropensci.org/openalexR/articles/A_Brief_Introduction_to_openalexR.html) which can takes a list of DOIs and returns a list of works ([Works](https://docs.openalex.org/api-entities/works) are documents in [OpenAlex](https://openalex.org).) as provided by OpenAlex. The function has many other arguments, but I will show here on the use for this specific example. For more information, please refer to the help in R or the [documentation](https://docs.ropensci.org/openalexR/reference/index.html).
 
 ```{r}
 #| label: fetch_works
@@ -160,9 +131,12 @@ key_works <- oa_fetch(
 ids <- openalexR:::shorten_oaid(key_works$id)
 ```
 
-Now the snowball search can be conducted using the function `oa_snowball()`. 
-Here, I wrap the function call into a `if then else` as the snowball can take 
-some time to run, and loading it from disk is much faster and efficient.
+The resulting list, has two elements: 
+    1. **`nodes`** which contains the individual publications, i.e., the works as returned by OpenAlex. These are the **nodes** of the citation network
+    2. **`edges`** which contains the citations between the works or edges of the citation network, which form the **edges** of the citation network.
+
+The edges only contain the citations from and to the key-papers, so the citation network does not include any citations between the newly identified works. We will come back to this later.
+Another useful function is `snowball2df()` which flattens the object returned by `oa_snowball()` into a `tibble`. It is usually much easier to work with this flat structure
 
 ```{r}
 #| label: snowball
@@ -195,10 +169,9 @@ flat_snow <- snowball2df(snowball) |>
 ```
 
 #### Plotting the network
-There ara many doifferent packages in R to plot networks ([igraph](https://r.igraph.org), [ggraph](https://ggraph.data-imaginist.com) together eith [tidygraph](https://tidygraph.data-imaginist.com) and others).
+There ara many different packages in R to plot networks ([igraph](https://r.igraph.org), [ggraph](https://ggraph.data-imaginist.com) together with [tidygraph](https://tidygraph.data-imaginist.com) and others).
 
-For now, I will only show how to plt the network using `ggraph` and `tidygraph` and not go into details how the plot can be tweaked.
-
+For now, I will only show how to plot the network using `ggraph` and `tidygraph` and not go into details how the plot can be tweaked.
 
 
 ```{r}
@@ -230,15 +203,15 @@ if (!file.exists(fn)) {
 ```
 ![](figures/cited_by_count.png)
 
-There ara many options on how these plots can be tweaked, but this is beyond the 
+There are many options on how these plots can be tweaked, but this is beyond the 
 scope of this technical guideline to go into details. Please see the 
 documentation of [ggraph](https://ggraph.data-imaginist.com) and 
 [tidygraph](https://tidygraph.data-imaginist.com) the two packages for more information.
 
 #### Supplementing the citation network
 
-As mentioned above, the citation network does not include ay links between the newly 
-identified works, as these are included only through citing the key papers. This can be 
+As mentioned above, the citation network does not include any links between the newly 
+identified works, as these are included only through citing or cited by the key papers. This can be 
 easily be changed, as the works returned from OpenAlex contain a field which lists all the ids 
 of the works which are citing the work. This field is called `referenced_works` and can be used to 
 supplement the citation network. 
@@ -339,6 +312,31 @@ and the network is much more connected. A visual inspection is therefore not
 possible anymore, and one needs to use other methods to analyse the network. 
 One possiblility is to identify clusters in the citation network.
 
+## Other things to do with snowball search
+Aspect which are not covered in this technical guidaline, but can be done with the results 
+from the snowball seaarching are:
+
+- Interactive graphs from the citation network using for example the package `networkD3`
+- Clustering of the citation network using for example the package `igraph` to identify topical clusters, citation clusters, etc.
+- Identify papers linking identified clsters 
+- etc.
+
+
+## Things to keep in mind when using snowballing for literature search
+
+This is a (non complete) list of points one needs to consider when using snowballing for literature search. Not all points appl;y to all questions, and some are more relevant then others. They are listed in no particular order.
+
+1. The selection of the key papers is essential for the resulting literature search. The key papers should cover the range of the topic which should be covered by the literature search, while containing  the most relevant papers of the topic.
+2. The snowball search is based on citation relationships and not on keywords. This means, that the resulting literature search is based on the citation network of the key papers and not on the keywords of the papers. In other words, papers which are not cited by the key papers will not be included in the resulting literature search, even if they are highly relevant for the topic. 
+3. The snowball covers (given a solid choice of key papers) the most relevant literature for the topic, but it does not discover topic areas which are relevant but not linked to the key-papers by citations. In other words, if a topic consists of two research areas which are not citing each other, keypapers need to be provided for both.
+4. Snowball search contains less false positives (works not related to the topic) than a keyword based search, while a snowball search is less likely to find all works related.
+5. Automated snowball search is limited to [OpenAlex](https://openalex.org) at the moment, which is a database of mainly scholary literature. This means, that grey literature is underrepresented in the snowball results. Neertheless, it is possible to do it manually, but the effort is much higher.
+6 Snowball search is a very efficient (time saving) way to obtain a list of relevant literature of a topic, as keyword search usually requires rather complex search terms and numerous iterations to get down to a managable number of identified works.
+
+
+
+<!-- 
+
 #### Identifying clusters in the citation network
 
 One approach to identify clusters in the citation network is to use the edge.betweenness
@@ -398,6 +396,5 @@ copub_network <-
         selectedBy = list(variable = "doi", highlight = TRUE),
         highlightNearest = list(enabled = TRUE, algorithm = "all")
     )
-```
+``` -->
 
-## Advantages and disadvantages of snowballing
