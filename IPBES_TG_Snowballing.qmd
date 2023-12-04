@@ -1,6 +1,6 @@
 ---
 title: Technical Guideline Series
-subtitle: Snowballing for Scientific Literature Search and Analysis
+subtitle: Snowballing for Literature Search and Analysis
 date: today
 author:
   - name: 
@@ -37,7 +37,7 @@ citation:
   container-title: IPBES Technical Guidelines on Snowballing
   doi: xxxxx
 doi: xxxxx
-version: 0.0.2
+version: 0.4.0
 
 format:
     html:
@@ -47,13 +47,33 @@ format:
         embed-resources: true
         code-fold: false
         code-summary: 'Show the code'
-        keep-md: true
 ---
 
 ```{r}
 #| label: setup
 #| include: false
+#| echo: true
+#| 
+
 # This is needed to execute the inline code
+
+if (!require("quarto")) {
+    install.packages("quarto")
+    library(quarto)
+}
+
+if (!require("pandoc")) {
+    install.packages("pandoc")
+    library(pandoc)
+}
+
+if (quarto::quarto_version() < as.numeric_version("1.4.358")) {
+    stop("Please upgrade your quarto version to at least 1.4.358 as otherwise the rendering will fail, but the code will run\n")
+}
+
+if (pandoc::pandoc_version() < as.numeric_version("3.1.9")) {
+    stop("Please upgrade your quarto version to at least 3.1.9 as otherwise the rendering will fail, but the code will run\n")
+}
 ```
 
 
@@ -62,7 +82,7 @@ Prepared by
 
 Reviewed by 
 - [Aidin Niamir](mailto:Aidin.Niamir@Senckenberg.de) - IPBES Technical Support Unit for Knowledge and Data
-- [Yanina Sica](mailto:Yanina.Sica@Senckenberg.de) - IPBES Technical Support Unit for Knowledge and Data
+- [Yanina V. Sica](mailto:Yanina.Sica@Senckenberg.de) - IPBES Technical Support Unit for Knowledge and Data
 
 <!-- - IPBES Task Force on Knowledge and Data**  -->
 
@@ -82,6 +102,7 @@ Consequently, the selection of the key-papers is essential in determining the re
 
 ## Methods
 
+
 ### Databases suitable for Snowballing
 In principle, snowballing can be done with most (if not all) literature databases. Examples are Web of Science,Scopus or PubMed which provide the possibility to search for papers from their web interface or using API services (e.g. https://dev.elsevier.com/sc_apis.html). When using their web interface, one can only search  for one article at the time, so it is very cumbersome. Using  the provided APIs makes  automating the process possible, but becomes easily extremely expensive and still laden with restrictions.
 A good alternative for this type of search strategy is [OpenAlex](https://openalex.org), which has free and unlimited API access for all practical purposes. Therefore, the Snowball search can be scripted, and API clients are available for many different programming languages.
@@ -95,7 +116,11 @@ is available from CRAN and can be installed using
 
 ```{r}
 #| eval: false
-install.packages(openalexR)
+install.packages("openalexR")
+install.packages("ggplot2")
+install.packages("tidygraph")
+install.packages("ggraph")
+install.packages("tibble")
 ```
 
 and loaded using
