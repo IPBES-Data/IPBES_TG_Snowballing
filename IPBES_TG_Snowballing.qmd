@@ -47,6 +47,7 @@ format:
         embed-resources: true
         code-fold: false
         code-summary: 'Show the code'
+        keep-md: true
 ---
 
 ```{r}
