@@ -82,9 +82,11 @@ if (pandoc::pandoc_version() < as.numeric_version("3.1.9")) {
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 Prepared by 
+
 - [Rainer M. Krug](mailto:Rainer.Krug@Senckenberg.de) - IPBES Task Force on Knowledge and Data. 
 
 Reviewed by 
+
 - [Aidin Niamir](mailto:Aidin.Niamir@Senckenberg.de) - IPBES Technical Support Unit for Knowledge and Data
 - [Yanina V. Sica](mailto:Yanina.Sica@Senckenberg.de) - IPBES Technical Support Unit for Knowledge and Data
 
@@ -116,7 +118,7 @@ This technical guideline will focus particularly on the use of [OpenAlex](https:
 
 #### Installation and loading of the package
 The package [openalexR](https://docs.ropensci.org/openalexR/articles/A_Brief_Introduction_to_openalexR.html) 
-is available from CRAN and can be installed using
+is available from CRAN. The package plus additional ones used in this technical guideline and can be installed using
 
 ```{r}
 #| eval: false
