@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/99999.svg)](https://doi.org/99999)
+[![DOI](https://zenodo.org/badge/706159588.svg)](https://zenodo.org/doi/10.5281/zenodo.10257156)
 [![GitHub release](https://img.shields.io/github/release/IPBES-Data/IPBES_TG_Snowballing.svg)](https://github.com/IPBES-Data/IPBES_TG_Snowballing/releases/latest)
 [![GitHub commits since latest release](https://img.shields.io/github/commits-since/IPBES-Data/IPBES_TG_Snowballing/latest)](https://github.com/IPBES-Data/IPBES_TG_Snowballing/commits/main)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)

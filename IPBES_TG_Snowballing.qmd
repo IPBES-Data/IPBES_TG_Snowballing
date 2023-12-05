@@ -35,9 +35,9 @@ copyright:
 citation: 
   type: report
   container-title: IPBES Technical Guidelines on Snowballing
-  doi: xxxxx
-doi: xxxxx
-version: 0.4.0
+  doi: 10.5281/zenodo.10257156
+doi: 10.5281/zenodo.10257156
+version: 0.5.0
 
 format:
     html:
@@ -76,7 +76,7 @@ if (pandoc::pandoc_version() < as.numeric_version("3.1.9")) {
 }
 ```
 
-[![DOI](https://zenodo.org/badge/DOI/99999.svg)](https://doi.org/99999)
+[![DOI](https://zenodo.org/badge/706159588.svg)](https://zenodo.org/doi/10.5281/zenodo.10257156)
 [![GitHub release](https://img.shields.io/github/release/IPBES-Data/IPBES_TG_Snowballing.svg)](https://github.com/IPBES-Data/IPBES_TG_Snowballing/releases/latest)
 [![GitHub commits since latest release](https://img.shields.io/github/commits-since/IPBES-Data/IPBES_TG_Snowballing/latest)](https://github.com/IPBES-Data/IPBES_TG_Snowballing/commits/main)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
