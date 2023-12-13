@@ -37,7 +37,7 @@ citation:
   container-title: IPBES Technical Guidelines on Snowballing
   doi: 10.5281/zenodo.10257156
 doi: 10.5281/zenodo.10257156
-version: 0.5.0
+version: 0.5.1
 
 format:
     html:
@@ -101,7 +101,9 @@ Last updated: `r Sys.Date() |> format("%d %B, %Y")`
 
 ## Introduction
 
-Snowballing in literature search and analysis refers to the approach to search for literature starting from a set of identified key-papers. These key-papers should cover the range of the topic which should be covered by the literature search, while containing  the most relevant papers of the topic. Starting from these key-papers, the papers which are cited in the key-papers (also called backward search) as well as the papers which are citing the key-papers (also called forward search) are identified.
+Snowball sampling (also known as chain sampling, chain-referral sampling, referral sampling) is in the context of literature search a search which starts at some key-papers and adds the papers which are referenced in the key-papers as well as the papers citing one or more key-papers to the corpus of identified papers.
+
+These key-papers should cover the range of the topic which should be covered by the literature search, while containing  the most relevant papers of the topic. Starting from these key-papers, the papers which are cited in the key-papers (also called backward search) as well as the papers which are citing the key-papers (also called forward search) are identified.
 
 Consequently, the selection of the key-papers is essential in determining the resulting coverage of the topic by the literature identified by the snowball search.
 
