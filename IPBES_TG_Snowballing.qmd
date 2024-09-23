@@ -242,6 +242,25 @@ scope of this technical guideline to go into details. Please see the
 documentation of [ggraph](https://ggraph.data-imaginist.com) and 
 [tidygraph](https://tidygraph.data-imaginist.com) the two packages for more information.
 
+#### Interactive plotting of the Network
+Snowball citation networks can also be plotted as an interactive graph. The easiest is to use the function `plot_snowball_interactive` which is included in the `IPBES.R` package.
+It needs two arkumwents:
+- `snowball`: the result from the citation network
+- `key_works`: the list of key works. This can be obtained from the snowball object by setting `key_works = snowball$nodes[snowball$nodes$oa_input == TRUE,]` as done in the example below.
+
+The third argunment, `file` is the name of the file where the plot will be saved. The default is `NULL` in which case the html widget is not saved.
+
+```{r}
+#| label: plot_network_interactive
+
+dat <- readRDS(file.path("data", "snowball.rds"))
+IPBES.R::plot_snowball_interactive(
+    snowball = dat, 
+    key_works = dat$nodes[dat$nodes$oa_input == TRUE,]
+)
+
+
+```
 #### Supplementing the citation network
 
 As mentioned above, the citation network does not include any links between the newly 
