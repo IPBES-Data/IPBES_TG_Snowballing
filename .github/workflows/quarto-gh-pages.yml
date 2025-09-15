@@ -1,0 +1,45 @@
+name: Build and Publish (Quarto)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Export QMD front matter to metadata_qmd.yaml
+        run: |
+          bash ./scripts/export_frontmatter.sh IPBES_TG_Snowballing.qmd
+
+      - name: Render IPBES_TG_Snowballing.qmd to HTML
+        run: |
+          quarto render IPBES_TG_Snowballing.qmd --to html --output index.html
+
+      - name: Prepare publish dir
+        run: |
+          rm -rf public
+          mkdir -p public
+          cp index.html public/
+          if [ -f metadata_qmd.yaml ]; then cp metadata_qmd.yaml public/; fi
+
+      - name: Publish to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: public
+          enable_jekyll: false
+

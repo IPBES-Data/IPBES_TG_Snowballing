@@ -49,3 +49,5 @@ po/*~
 rsconnect/
 IPBES_TG_Snowballing.code-workspace
 .DS_Store
+
+metadata_qmd.yaml
