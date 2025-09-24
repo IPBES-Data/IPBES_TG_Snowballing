@@ -73,7 +73,7 @@ if (quarto::quarto_version() < as.numeric_version("1.4.358")) {
     stop("Please upgrade your quarto version to at least 1.4.358 as otherwise the rendering will fail, but the code will run\n")
 }
 
-# if (pandoc::pandoc_version() < as.numeric_version("3.1.9")) {
+# if (rmarkdown::pandoc_version::pandoc_version() < as.numeric_version("3.1.9")) {
 #     stop("Please upgrade your quarto version to at least 3.1.9 as otherwise the rendering will fail, but the code will run\n")
 # }
 ```
