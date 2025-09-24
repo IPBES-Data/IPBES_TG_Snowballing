@@ -1,0 +1,47 @@
+---
+title: Technical Guideline Series
+subtitle: Snowball Search for Literature Search and Analysis using OpenAlex
+date: today
+author:
+  - name: 
+        family: Krug
+        given: Rainer M.
+    id: rmk
+    orcid: 0000-0002-7490-0066
+    email: Rainer.Krug@Senckenberg.de, Rainer@Krugs.de
+    affiliation: 
+      - name: Senckenberg
+        city: Frankfurt (Main)
+        url: https://www.senckenberg.de/en/institutes/sbik-f/
+    roles: [author, editor]
+  - name: 
+        family: Niamir
+        given: Aidin 
+    id: an
+    orcid: 0000-0003-4511-3407
+    email: Aidin.Niamir@Senckenberg.de
+    affiliation: 
+      - name: Senckenberg
+        city: Frankfurt (Main)
+        url: https://www.senckenberg.de/en/institutes/sbik-f/
+    roles: [editor]
+abstract: > 
+    In addition to the typical literature search using search terms, one can conduct a snowball search. A snowball search starts from a set of identified key-papers, and the snowball search will identify the publications cited in the key papers as well as the publications citing the key-paper. This search strategy identifies related articles using citation relationships (not keywords), building a citation network based on the key-papers  Here we will demonstrate how a snowballing search can be conducted using [OpenAlex](https://OpenAlex.org) and R with code examples and discuss some shortcomings and advantages of this approach. Furthermore, we will outline some analysis approaches and possibilities of a citation network without going into too much detail 
+keyword: "literature search, snowball search, citation network"
+license: "CC BY"
+citation: 
+  type: report
+  container-title: IPBES Technical Guidelines on Snowball Search for Literature Search and Analysis using OpenAlex
+  doi: 10.5281/zenodo.10257156
+doi: 10.5281/zenodo.10257156
+version: 0.6.0
+
+format:
+    html:
+        toc: true
+        toc-depth: 4
+        toc_expand: true
+        embed-resources: true
+        code-fold: false
+        code-summary: 'Show the code'
+---
