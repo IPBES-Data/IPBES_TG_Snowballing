@@ -35,19 +35,22 @@ jobs:
         with:
           use-public-rspm: true
 
-      - name: Install R packages
+      - name: Enable r2u
         if: hashFiles('R.pkgs') != ''
         run: |
-          Rscript - <<'RS'
-          pkgs <- readLines("R.pkgs"); pkgs <- pkgs[nzchar(pkgs)]
-          if (length(pkgs)) {
-            repos <- getOption("repos")
-            if (!nzchar(repos["CRAN"]) && nzchar(Sys.getenv("RSPM"))) {
-              repos["CRAN"] <- Sys.getenv("RSPM")
-            }
-            install.packages(pkgs, repos = repos)
-          }
-          RS
+          codename="$(source /etc/os-release && echo "$VERSION_CODENAME")"
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://r2u.stat.illinois.edu/ubuntu/InRelease \
+            | sudo gpg --dearmor -o /etc/apt/keyrings/r2u.gpg
+          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/r2u.gpg] https://r2u.stat.illinois.edu/ubuntu ${codename} main" \
+            | sudo tee /etc/apt/sources.list.d/r2u.list
+          sudo apt-get update
+
+      - name: Install R packages (r2u)
+        if: hashFiles('R.pkgs') != ''
+        run: |
+          sudo apt-get install -y --no-install-recommends \
+            $(sed 's/^[[:space:]]*$/d/; s/[[:space:]]*$//' R.pkgs | tr '[:upper:]' '[:lower:]' | sed 's/^/r-cran-/')
 
       - name: Render TG.qmd to HTML
         run: |
