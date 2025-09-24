@@ -59,18 +59,23 @@ if (!require("quarto")) {
     library(quarto)
 }
 
-if (!require("pandoc")) {
-    install.packages("pandoc")
-    library(pandoc)
-}
+# pandoc_bin <- Sys.getenv("QUARTO_PANDOC")
+# if (nzchar(pandoc_bin)) {
+#     Sys.setenv(RSTUDIO_PANDOC = dirname(pandoc_bin))
+# }
+
+# if (!require("pandoc")) {
+#     install.packages("pandoc")
+#     library(pandoc)
+# }
 
 if (quarto::quarto_version() < as.numeric_version("1.4.358")) {
     stop("Please upgrade your quarto version to at least 1.4.358 as otherwise the rendering will fail, but the code will run\n")
 }
 
-if (pandoc::pandoc_version() < as.numeric_version("3.1.9")) {
-    stop("Please upgrade your quarto version to at least 3.1.9 as otherwise the rendering will fail, but the code will run\n")
-}
+# if (pandoc::pandoc_version() < as.numeric_version("3.1.9")) {
+#     stop("Please upgrade your quarto version to at least 3.1.9 as otherwise the rendering will fail, but the code will run\n")
+# }
 ```
 
 [![DOI](https://zenodo.org/badge/706159588.svg)](https://zenodo.org/doi/10.5281/zenodo.10257156)
