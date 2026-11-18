@@ -1,7 +1,6 @@
 ggplot2
 ggraph
 htmlwidgets
-igraph
 keyring
 knitr
 networkD3
@@ -11,4 +10,3 @@ quarto
 rmarkdown
 svglite
 tidygraph
-visNetwork
