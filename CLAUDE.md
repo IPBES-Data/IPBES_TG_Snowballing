@@ -30,6 +30,10 @@ The document links to `./figures/*_interactive*.html` ("Open in new window"); th
 
 Code chunks (and plain ``` blocks) have an empty line before the opening and after the closing fence.
 
+R package names in prose (TG.qmd and README.md) are always links of the form `` [`{igraph}`](https://r.igraph.org) ``. Not in code, and not for "the openalexPro ecosystem" (the GitHub organisation).
+
+External links open in a new tab (`link-external-newwindow: true` in the front matter; Quarto adds `target="_blank"` via JavaScript at page load). Relative links count as internal, so links to local files that should open in a new tab need `{target="_blank"}`.
+
 ## R package detection gotcha
 
 `detect_r_packages.sh` is a regex scan and does not skip R comments: commented-out `library(pandoc)` / `require(...)` lines in `TG.qmd` still land in `R.pkgs` and CI tries to install them (the commented-out draft block at the end of `TG.qmd` brings in `igraph`/`visNetwork`), and `pkg::` in prose counts too (`keyring`). Delete unused package references rather than commenting them out. The committed `R.pkgs` is overwritten by CI on each run.

@@ -25,7 +25,7 @@ author:
         url: https://www.senckenberg.de/en/institutes/sbik-f/
     roles: [editor]
 abstract: >
-    In addition to the typical literature search using search terms, one can conduct a snowball search. A snowball search starts from a set of identified key-papers, and the snowball search will identify the publications cited in the key papers as well as the publications citing the key-paper. This search strategy identifies related articles using citation relationships (not keywords), building a citation network based on the key-papers. Here we will demonstrate how a snowball search can be conducted using [OpenAlex](https://OpenAlex.org) and R with the [openalexPro](https://github.com/openalexPro) ecosystem of packages, in particular [openalexSnowball](https://github.com/openalexPro/openalexSnowball), with code examples, and discuss some shortcomings and advantages of this approach. Furthermore, we will outline some analysis approaches and possibilities of a citation network without going into too much detail.
+    In addition to the typical literature search using search terms, one can conduct a snowball search. A snowball search starts from a set of identified key-papers, and the snowball search will identify the publications **cited** in the key papers as well as the publications **citing** the key-paper. This search strategy identifies related articles using citation relationships (not keywords), building a citation network based on the key-papers. Here we will demonstrate how a snowball search can be conducted using [OpenAlex](https://OpenAlex.org) and R with the [openalexPro](https://github.com/openalexPro) ecosystem of packages, in particular [`{openalexSnowball}`](https://github.com/openalexPro/openalexSnowball), with code examples, and discuss some shortcomings and advantages of this approach. Furthermore, we will outline some analysis approaches and possibilities of a citation network without going into too much detail.
 keyword: "literature search, snowball search, citation network"
 license: "CC BY"
 citation:
@@ -43,6 +43,7 @@ format:
         embed-resources: true
         code-fold: false
         code-summary: 'Show the code'
+        link-external-newwindow: true
 ---
 
 ```{r}
@@ -104,21 +105,21 @@ Consequently, the selection of the key-papers is essential and this selection de
 
 
 ### Databases suitable for Snowballing
-In principle, snowballing can be done with most (if not all) literature databases. Examples are Web of Science, Scopus or PubMed which provide the possibility to search for papers from their web interface or using API services (e.g. https://dev.elsevier.com/sc_apis.html). When using their web interface, one can only search for one article at the time, so it is very cumbersome to conduct a snowball search for multiple keypapers. Using the provided APIs of these proprietary databases makes automating the search possible, but becomes easily extremely expensive and still laden with restrictions due to high licence fees.
+In principle, snowballing can be done with most (if not all) literature databases. Examples are Web of Science, Scopus or PubMed which provide the possibility to search for papers from their web interface or using API services. When using their web interface, one can only search for one article at the time, so it is very cumbersome to conduct a snowball search for multiple keypapers. Using the provided APIs of these proprietary databases makes automating the search possible, but becomes easily extremely expensive and still laden with restrictions due to high licence fees.
 
-A good alternative is [OpenAlex](https://openalex.org). [OpenAlex](https://openalex.org) is an open scholarly data source which provides a free daily usage budget for its API (which is enough for most projects, including the snowball search shown here), and the complete database is also available as a free snapshot for download. Therefore, the snowball search can be scripted. API clients are available for many different programming languages, including R (e.g. [openalexR](https://docs.ropensci.org/openalexR/) and [openalexPro](https://github.com/openalexPro/openalexPro)) and Python ([pyalex](https://pypi.org/project/pyalex/)).
+A good alternative is [OpenAlex](https://openalex.org). [OpenAlex](https://openalex.org) is an open scholarly data source which provides a free daily usage budget for its API (which is enough for most projects, including the snowball search shown here), and the complete database is also available as a free snapshot for download. Therefore, the snowball search can be scripted. API clients are available for many different programming languages, including R (e.g. [`{openalexR}`](https://docs.ropensci.org/openalexR/) and [`{openalexPro}`](https://github.com/openalexPro/openalexPro)) and Python ([pyalex](https://pypi.org/project/pyalex/)).
 
 This technical guideline focuses on the use of [OpenAlex](https://openalex.org) (the data source for literature recommended by the IPBES Technical Support Unit on Knowledge and Data) through the [openalexPro](https://github.com/openalexPro) ecosystem of R packages:
 
-- **[openalexPro](https://github.com/openalexPro/openalexPro)** provides the access to the OpenAlex API. In contrast to [openalexR](https://docs.ropensci.org/openalexR/), which processes all data in memory, openalexPro processes the retrieved data on disk and stores it as [Apache Parquet](https://parquet.apache.org) files. The size of a search is therefore limited by disk space rather than by memory.
-- **[openalexSnowball](https://github.com/openalexPro/openalexSnowball)** builds on openalexPro and conducts the snowball search itself. It retrieves the key-papers, the works citing them and the works cited by them, and stores the resulting citation network as nodes (works) and edges (citations) in Parquet.
+- **[`{openalexPro}`](https://github.com/openalexPro/openalexPro)** provides the access to the OpenAlex API. In contrast to [`{openalexR}`](https://docs.ropensci.org/openalexR/), which processes all data in memory, [`{openalexPro}`](https://github.com/openalexPro/openalexPro) processes the retrieved data on disk and stores it as [Apache Parquet](https://parquet.apache.org) files. The size of a search is therefore limited by disk space rather than by memory.
+- **[`{openalexSnowball}`](https://github.com/openalexPro/openalexSnowball)** builds on [`{openalexPro}`](https://github.com/openalexPro/openalexPro) and conducts the snowball search itself. It retrieves the key-papers, the works citing them and the works cited by them, and stores the resulting citation network as nodes (works) and edges (citations) in Parquet.
 
-Further packages in the ecosystem which are useful in this context, but not used in this guideline, are [openalexSnapshot](https://github.com/openalexPro/openalexSnapshot), which allows to conduct the same snowball search offline against a local copy of the OpenAlex snapshot (see [Offline snowball search](#offline-snowball-search)), and [openalexConvert](https://github.com/openalexPro/openalexConvert), which exports the retrieved works to reference managers (CSL-JSON, BibTeX, Zotero).
+Further packages in the ecosystem which are useful in this context, but not used in this guideline, are [`{openalexSnapshot}`](https://github.com/openalexPro/openalexSnapshot), which allows to conduct the same snowball search offline against a local copy of the OpenAlex snapshot (see [Offline snowball search](#offline-snowball-search)), and [`{openalexConvert}`](https://github.com/openalexPro/openalexConvert), which exports the retrieved works to reference managers (CSL-JSON, BibTeX, Zotero).
 
 ### Snowballing in R
 
 #### Installation and loading of the packages
-The packages of the openalexPro ecosystem are not on CRAN, but are available from [r-universe](https://openalexpro.r-universe.dev). Installing openalexSnowball also installs openalexPro. The packages, plus the additional ones used in this technical guideline for plotting, can be installed using
+The packages of the openalexPro ecosystem are not on CRAN, but are available from [r-universe](https://openalexpro.r-universe.dev). Installing [`{openalexSnowball}`](https://github.com/openalexPro/openalexSnowball) also installs [`{openalexPro}`](https://github.com/openalexPro/openalexPro). The packages, plus the additional ones used in this technical guideline for plotting, can be installed using
 
 ```{r}
 #| eval: false
@@ -147,7 +148,7 @@ library(openalexSnowball)
 
 #### OpenAlex API key
 
-OpenAlex can be used without an API key, but much stricter limits apply in this case. It is therefore strongly recommended to obtain a free API key from [OpenAlex](https://openalex.org) and to make it available to openalexPro. Assuming the key is `xxxxxxx`, this can be done in one of the following ways, which are evaluated in this order:
+OpenAlex can be used without an API key, but much stricter limits apply in this case. It is therefore strongly recommended to obtain a free API key from [OpenAlex](https://openalex.org) and to make it available to [`{openalexPro}`](https://github.com/openalexPro/openalexPro). Assuming the key is `xxxxxxx`, this can be done in one of the following ways, which are evaluated in this order:
 
 1. by setting the option using `openalexPro::opt_api_key("xxxxxxx")` in the R session,
 2. by setting the environment variable `openalexPro.api_key` to the key, for example in the `.Renviron` file, or
@@ -195,6 +196,19 @@ if (!dir.exists(file.path(snowball_dir, "edges"))) {
 }
 ```
 
+The same snowball search can also be done using the OpenAlex ids of the key papers instead of their DOIs, by using the argument `identifier`. This is useful when the key papers have no DOI, or when they have been identified in OpenAlex itself (the OpenAlex id is part of the URL of a work on [OpenAlex](https://openalex.org), e.g. `W2020319093` in `https://openalex.org/W2020319093`). The OpenAlex ids of the four key papers used here are:
+
+```{r}
+#| eval: false
+
+pro_snowball(
+    identifier = c("W2020319093", "W2204133637", "W4220786370", "W4379647013"),
+    output = file.path("data", "snowball_ids"),
+    resume = TRUE,
+    verbose = FALSE
+)
+```
+
 When there are many key papers, they should all be passed to a single call of `pro_snowball()` rather than calling it in a loop for each key paper, as this is much faster. See `?pro_snowball` for further arguments, e.g. `workers` to retrieve the data in parallel.
 
 #### The results of the snowball search
@@ -210,7 +224,7 @@ data/snowball/
 └── .osb_done/               # markers of the completed stages, used by resume
 ```
 
-The results can be read into R using `read_snowball()`. With `return_data = TRUE` they are read into memory as tibbles, otherwise they are returned as Arrow Datasets, which can be filtered and summarised (e.g. using [dplyr](https://dplyr.tidyverse.org) or [DuckDB](https://duckdb.org)) without loading the whole dataset into memory. The latter is useful for large snowball searches. `shorten_ids = TRUE` removes the `https://openalex.org/` prefix from the ids, and `meta = TRUE` returns in addition the provenance information.
+The results can be read into R using `read_snowball()`. With `return_data = TRUE` they are read into memory as tibbles, otherwise they are returned as Arrow Datasets, which can be filtered and summarised (e.g. using [`{dplyr}`](https://dplyr.tidyverse.org) or [DuckDB](https://duckdb.org)) without loading the whole dataset into memory. The latter is useful for large snowball searches. `shorten_ids = TRUE` removes the `https://openalex.org/` prefix from the ids, and `meta = TRUE` returns in addition the provenance information.
 
 ```{r}
 #| label: read_snowball
@@ -272,17 +286,17 @@ The edges are of three mutually exclusive types, which can be selected using the
 - **`extended`**: citations between two works of the snowball search, neither of them being a key paper,
 - **`outside`**: citations from or to works which are not part of the snowball search.
 
-By selecting `edge_type = "core"` above, the citation network **does not** include any citations between the newly identified works. We will come back to this later.
+By selecting `edge_type = "core"` above, the citation network **does not** include any citations between the newly identified works. We will come back to this later. `edge_type = c("core", "extended")` contains the core as well as the extended citations.
 
 #### Plotting the network
 
-There are many different packages in R to plot networks ([igraph](https://r.igraph.org), [ggraph](https://ggraph.data-imaginist.com) together with [tidygraph](https://tidygraph.data-imaginist.com) and others).
+There are many different packages in R to plot networks ([`{igraph}`](https://r.igraph.org), [`{ggraph}`](https://ggraph.data-imaginist.com) together with [`{tidygraph}`](https://tidygraph.data-imaginist.com) and others).
 
 As we will plot two networks in this guideline, we first define two functions, one for a static and one for an interactive plot, which take the result of `read_snowball()` as input. Both plots only use a few columns of the nodes.
 
 ##### Static Network Graph
 
-For the static plot, I will only show how to plot the network using `ggraph` and `tidygraph` and not go into details how the plot can be tweaked.
+For the static plot, I will only show how to plot the network using [`{ggraph}`](https://ggraph.data-imaginist.com) and [`{tidygraph}`](https://tidygraph.data-imaginist.com) and not go into details how the plot can be tweaked.
 
 ```{r}
 #| label: plot_functions_static
@@ -325,7 +339,7 @@ plot_snowball_static <- function(snowball, title = "Cited by count") {
 }
 ```
 
-which can now be used to plot the network and to save the plot as pdf and png (saving as svg using the package [svglite](https://svglite.r-lib.org) is shown, but commented out, as the resulting files are very large):
+which can now be used to plot the network and to save the plot as pdf and png (saving as svg using the package [`{svglite}`](https://svglite.r-lib.org) is shown, but commented out, as the resulting files are very large):
 
 ```{r}
 #| label: plot_network
@@ -370,12 +384,12 @@ Download: [PDF](figures/cited_by_count.pdf){download=""} | [PNG](figures/cited_b
 
 There are many options on how these plots can be tweaked, but this is beyond the
 scope of this technical guideline to go into details. Please see the
-documentation of [ggraph](https://ggraph.data-imaginist.com) and
-[tidygraph](https://tidygraph.data-imaginist.com) the two packages for more information.
+documentation of [`{ggraph}`](https://ggraph.data-imaginist.com) and
+[`{tidygraph}`](https://tidygraph.data-imaginist.com) the two packages for more information.
 
 ##### Interactive Network Graph
 
-Snowball citation networks can also be plotted as an interactive graph. I use here [networkD3](https://christophergandrud.github.io/networkD3/) to do this and to save the html widget. Clicking on a node opens the work via its DOI.
+Snowball citation networks can also be plotted as an interactive graph. I use here [`{networkD3}`](https://christophergandrud.github.io/networkD3/) to do this and to save the html widget. Clicking on a node opens the work via its DOI.
 
 ```{r}
 #| label: plot_functions_interactive
@@ -443,12 +457,12 @@ plot_snowball_interactive(
 )
 ```
 
-[Open in new window](./figures/cited_by_count_interactive.html)
+[Open in new window](./figures/cited_by_count_interactive.html){target="_blank"}
 
-These interactive graphs have even more options for tweaking than the static plots, see [networkD3](https://christophergandrud.github.io/networkD3/) for more information.
+These interactive graphs have even more options for tweaking than the static plots, see [`{networkD3}`](https://christophergandrud.github.io/networkD3/) for more information.
 
 
-#### Supplementing the citation network
+#### The `extended` citation network
 
 As mentioned above, the core citation network does not include any links between the newly
 identified works, as these are included only through citing or being cited by the key papers.
@@ -521,7 +535,7 @@ plot_snowball_interactive(
 )
 ```
 
-[Open in new window](./figures/cited_by_count_interactive_supplemented.html)
+[Open in new window](./figures/cited_by_count_interactive_supplemented.html){target="_blank"}
 
 As one can easily see, the number of citations (edges) is much higher,
 and the network is much more connected. A visual inspection is therefore not
@@ -531,7 +545,7 @@ The edges of the type `outside`, i.e. the citations from and to works outside th
 
 #### Offline snowball search
 
-Instead of using the OpenAlex API, the snowball search can also be conducted entirely offline against a local copy of the [OpenAlex snapshot](https://docs.openalex.org/download-all-data/openalex-snapshot) by specifying the path to the snapshot in the argument `snapshot` of `pro_snowball()`. This requires that the snapshot has been downloaded for and prepared by using the package [openalexSnapshot](https://github.com/openalexPro/openalexSnapshot) (parquet snapshot, indexes created. Details seer the openalexSnapshot package). The results are identical in structure to the ones obtained via the API. An offline snowball search does not use any API budget and is reproducible, as the snapshot is a fixed version of OpenAlex. 
+Instead of using the OpenAlex API, the snowball search can also be conducted entirely offline against a local copy of the [OpenAlex snapshot](https://docs.openalex.org/download-all-data/openalex-snapshot) by specifying the path to the snapshot in the argument `snapshot` of `pro_snowball()`. This requires that the snapshot has been downloaded for and prepared by using the package [`{openalexSnapshot}`](https://github.com/openalexPro/openalexSnapshot) (parquet snapshot, indexes created. Details see the [`{openalexSnapshot}`](https://github.com/openalexPro/openalexSnapshot) package). The results are identical in structure to the ones obtained via the API. An offline snowball search does not use any API budget and is reproducible, as the snapshot is a fixed version of OpenAlex. 
 
 ```{r}
 #| eval: false
@@ -553,10 +567,10 @@ pro_snowball(
 Aspects which are not covered in this technical guideline, but can be done with the results
 from the snowball search are:
 
-- Clustering of the citation network using for example the package `igraph` to identify topical clusters, citation clusters, etc.
+- Clustering of the citation network using for example the package [`{igraph}`](https://r.igraph.org) to identify topical clusters, citation clusters, etc.
 - Identify papers linking identified clusters
 - other network analysis approaches to identify patterns in the citation network
-- export of the identified works to reference managers using [openalexConvert](https://github.com/openalexPro/openalexConvert)
+- export of the identified works to reference managers using [`{openalexConvert}`](https://github.com/openalexPro/openalexConvert)
 - etc.
 
 
@@ -571,69 +585,3 @@ This is a (non complete) list of points one needs to consider when using snowbal
 5. Grey literature is underrepresented in the snowball results. Nevertheless, it is possible to do additional snowball searches manually and to supplement the corpus, but the effort is relatively high.
 6. Snowball search is a very efficient (time saving) way to obtain a list of relevant literature of a topic, as keyword search usually requires rather complex search terms and numerous iterations to get down to a managable number of identified works.
 7. The content of OpenAlex changes continuously (new works, new citations, corrected records). A snowball search is therefore a snapshot in time and the provenance (date, key papers, package versions as stored in `snowball_meta.parquet`) should be reported. For a fully reproducible search, the offline search against a fixed version of the snapshot can be used.
-
-<!-- 
-
-#### Identifying clusters in the citation network
-
-One approach to identify clusters in the citation network is to use the edge.betweenness
-which is a measure which ??????.
-
-This clustering is implemented in the [igraph](https://r.igraph.org) package.
-
-HERE I NEED IDEAS!!!!
-
-```{r}
-#| eval: false
-
-library(igraph)
-
-g <- igraph::graph_from_data_frame(
-  d = snowball$edges,
-  # vertices = snowball$nodes,
-  directed = TRUE
-)
-eb <- cluster_edge_betweenness(g)
-
-layout <- layout.fruchterman.reingold(g)
-plot(
-  eb,
-  g,
-  layout = layout
-)
-```
-
-#### Interactive network chart
-Interactive network graphs are also possible, and mainly useful for smaller networks and for exploring the network.
-
-```{r}
-library(networkD3)
-
-p <- simpleNetwork(
-  Data = snowball$edges,
-  height = "50px",
-  width = "50px",
-  zoom = TRUE
-)
-p
-```
-
-
-#### And another graph option (have to try it out)
-
-```{r}
-#| eval: false
-
-# https://datastorm-open.github.io/visNetwork/
-library(visNetwork)
-
-copub_network <-
-    visNetwork(snowball$nodes, snowball$edges, width = "100%") |>
-    ## set random seed for reproducibility
-    visLayout(randomSeed = 123) |>
-    visOptions(
-        selectedBy = list(variable = "doi", highlight = TRUE),
-        highlightNearest = list(enabled = TRUE, algorithm = "all")
-    )
-``` -->
-
