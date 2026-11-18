@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## 0.7.0
+## 1.0.0
 
 ### Changed
 
@@ -12,6 +12,10 @@ All notable changes to this project will be documented in this file.
 - Plotting code is in two functions used for both networks.
 - Static PNG figures are saved at 300 instead of 600 dpi.
 - Re-ran the snowball search (2026-11-18); results and figures updated.
+- R packages are referred to as links of the form `{package}`; external links open in a new tab.
+- Author affiliation updated to SIB Swiss Institute of Bioinformatics.
+- Section "Supplementing the citation network" renamed to "The `extended` citation network"; unfinished draft section at the end removed.
+- CI caches the installed R packages.
 
 ### Added
 
@@ -21,6 +25,7 @@ All notable changes to this project will be documented in this file.
 - The interactive graphs are published to GitHub Pages, so the "Open in new window" links work.
 - Download links for the PDF and PNG versions of the static network graphs (also published to GitHub Pages). Saving as SVG is shown but commented out, as the files are very large.
 - The OpenAlex API key can be provided to CI as the repository secret `OPENALEX_API_KEY`.
+- Example of a snowball search using OpenAlex ids instead of DOIs.
 
 ### Fixed
 
