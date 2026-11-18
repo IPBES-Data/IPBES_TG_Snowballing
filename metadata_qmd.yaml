@@ -33,7 +33,7 @@ citation:
   container-title: IPBES Technical Guidelines on Snowball Search for Literature Search and Analysis using OpenAlex
   doi: 10.5281/zenodo.10257156
 doi: 10.5281/zenodo.10257156
-version: 0.7.0
+version: 1.0.0
 
 format:
     html:
