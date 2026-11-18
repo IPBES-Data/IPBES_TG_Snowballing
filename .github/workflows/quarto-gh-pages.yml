@@ -51,13 +51,20 @@ jobs:
             if (!nzchar(repos["CRAN"]) && nzchar(Sys.getenv("RSPM"))) {
               repos["CRAN"] <- Sys.getenv("RSPM")
             }
+            # openalexPro ecosystem packages are not on CRAN
+            repos <- c(openalexpro = "https://openalexpro.r-universe.dev", repos)
             install.packages(pkgs, repos = repos)
           }
           RS
 
       - name: Render TG.qmd to HTML
+        env:
+          # CI only; locally openalexPro finds the key via option, .Renviron or keyring.
+          # Used by the API-key check chunk, and by the snowball search if data/snowball/ is missing.
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
         run: |
-          quarto render TG.qmd --to html --output index.html
+          # openalexPro reads `openalexPro.api_key`; bash cannot export names containing a dot
+          env "openalexPro.api_key=${OPENALEX_API_KEY}" quarto render TG.qmd --to html --output index.html
           # quarto render TG.qmd --to gfm  --output README.md
 
       # - name: Commit updated README.md to default branch
@@ -71,6 +78,9 @@ jobs:
           rm -rf public
           mkdir -p public
           cp index.html public/
+          # interactive graphs and static figures linked from the TG
+          mkdir -p public/figures
+          cp figures/*_interactive*.html figures/*.pdf figures/*.png public/figures/
           if [ -f R.pkgs ]; then cp R.pkgs public/; fi
           if [ -f metadata_qmd.yaml ]; then cp metadata_qmd.yaml public/; fi
 
